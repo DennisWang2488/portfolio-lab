@@ -23,7 +23,7 @@ def load_e2edro(kind: str = "asset") -> pd.DataFrame:
     kind='asset'  -> 20 US large-caps (1135 weeks, 2000-01-07..2021-10-01)
     kind='factor' -> 8 Fama-French factors, same index
     """
-    path = VENDOR / "cache" / f"{kind}_weekly.pkl"
+    path = VENDOR / "cache" / f"{kind}_weekly.pkl"  # their pickle, not ours
     if not path.exists():
         raise FileNotFoundError(
             f"{path} missing — re-clone https://github.com/Iyengar-Lab/E2E-DRO "

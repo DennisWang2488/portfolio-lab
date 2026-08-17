@@ -71,6 +71,7 @@ def test_no_lookahead():
     R = _synthetic()
     T = 300
     R_corrupt = R.copy()
+    # anything loud enough that a look-ahead leak would show up in the weights
     R_corrupt.iloc[T:] = R_corrupt.iloc[T:] * 5.0 + 0.02
 
     for fn in (baselines.equal_weight, baselines.min_variance):

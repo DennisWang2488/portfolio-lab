@@ -44,7 +44,7 @@ def _rsi(close: pd.Series, period: int = RSI_PERIOD) -> pd.Series:
     avg_loss = loss.ewm(alpha=1 / period, adjust=False, min_periods=period).mean()
     rs = avg_gain / avg_loss.replace(0.0, np.nan)
     rsi = 100.0 - 100.0 / (1.0 + rs)
-    rsi = rsi.fillna(50.0)          # flat stretch -> neutral, not NaN
+    rsi = rsi.fillna(50.0)          # no movement → RSI is undefined; 50 is the usual cop-out
     return rsi / 50.0 - 1.0
 
 

@@ -14,7 +14,7 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-EULER_GAMMA = 0.5772156649015329
+EULER_GAMMA = 0.5772156649015329  # Bailey-LdP expected-max-Sharpe formula needs this
 
 
 def ann_return(returns: pd.Series, ann_factor: int) -> float:

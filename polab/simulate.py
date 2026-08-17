@@ -63,7 +63,7 @@ def signal_with_ic(returns: np.ndarray, ic: float, seed: int = 0) -> np.ndarray:
     """
     if not 0.0 <= ic <= 1.0:
         raise ValueError(f"ic must be in [0, 1], got {ic}")
-    rng = np.random.default_rng(seed + 10_000)
+    rng = np.random.default_rng(seed + 10_000)  # offset so this isn't the same stream as simulate_returns
     R = np.asarray(returns, float)
     mu = R.mean(axis=1, keepdims=True)
     sd = R.std(axis=1, keepdims=True)

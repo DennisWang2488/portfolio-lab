@@ -18,8 +18,8 @@ import cvxpy as cp
 def _sample_cov(window: pd.DataFrame, shrinkage: float = 0.1) -> np.ndarray:
     """Sample covariance with simple shrinkage toward the scaled identity.
 
-    Ledoit-Wolf-style target (avg variance * I) with a fixed intensity; enough
-    to keep the QPs well-conditioned on short windows without extra deps.
+    Not actual Ledoit-Wolf — 0.1 is just a number that keeps the QP from
+    falling over on a 104-week window. Fine for a baseline.
     """
     S = np.asarray(window.cov(ddof=1))
     n = S.shape[0]
@@ -29,7 +29,7 @@ def _sample_cov(window: pd.DataFrame, shrinkage: float = 0.1) -> np.ndarray:
 
 def equal_weight(window: pd.DataFrame) -> np.ndarray:
     n = window.shape[1]
-    return np.full(n, 1.0 / n)
+    return np.full(n, 1.0 / n)  # ignores the window, that's the point
 
 
 def min_variance(window: pd.DataFrame, shrinkage: float = 0.1) -> np.ndarray:

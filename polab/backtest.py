@@ -79,9 +79,9 @@ def walk_forward(returns: pd.DataFrame,
                 raise ValueError(f"{name}: invalid weights at {R.index[i]}")
             prev = target if w is None else w
             traded = np.abs(target - prev).sum()
-            cost = rate * traded
+            cost = rate * traded  # first entry: prev == target, so this is 0
             turnover_dates.append(R.index[i])
-            turnover_vals.append(traded / 2.0)        # one-way convention
+            turnover_vals.append(traded / 2.0)        # one-way. some people report two-way (= this*2)
             w = target
         r = R.iloc[i].to_numpy()
         port_ret[k] = float(w @ r) - cost

@@ -1,0 +1,39 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # No network, no vendored third-party data: the suite runs on the
+      # synthetic generator. The load-bearing case is test_no_lookahead, which
+      # corrupts the future and asserts past decisions are bit-identical.
+      - name: Offline test suite
+        run: python tests/test_polab.py
+
+      # Needs neither the vendored E2E-DRO tree nor the ETF panel. --quick uses
+      # fewer draws than the committed tables; this checks the study runs, it
+      # does not regenerate results/.
+      - name: IC x breadth simulation study
+        run: python scripts/run_ic_breadth_stability.py --quick

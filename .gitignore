@@ -1,0 +1,28 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# virtualenvs
+.venv/
+venv/
+env/
+
+# macOS
+.DS_Store
+
+# Third-party code, fetched not redistributed: bash scripts/setup_vendor.sh
+# (Costa & Iyengar, E2E-DRO, Apache 2.0 — ~70 MB including their cached nets.)
+vendor/
+
+# Market data, fetched not redistributed: python scripts/fetch_etf_data.py
+# Yahoo's terms do not permit republishing their price series.
+data/
+
+# Per-roll training chunks and checkpoints (regenerate: scripts/train_roll.py)
+results/rolls/
+*.ckpt
+
+# 4.3 MB of intermediate simulation draws; the summary and alpha* tables next
+# to it are committed. Regenerate: python scripts/run_ic_breadth_stability.py
+results/ic_breadth_stability_raw.csv

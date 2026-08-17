@@ -1,0 +1,23 @@
+# Core — enough for the offline test suite, the SPO+ re-test, and the
+# IC x breadth simulation study.
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+cvxpy>=1.3
+
+# cvxpy dropped ECOS from its default install in 1.6. polab/spo.py falls back
+# to CLARABEL/SCS when it is absent, but ECOS is what the committed numbers in
+# results/spo_retest_*.csv were produced with, so install it to reproduce them
+# exactly.
+ecos>=2.0
+
+# Nothing else is required. scripts/fetch_etf_data.py hits Yahoo's public chart
+# endpoint through urllib from the standard library, deliberately, rather than
+# taking on yfinance for one JSON call.
+
+# Only needed to retrain the E2E-DRO networks from scratch
+# (scripts/train_roll.py, notebooks/). Not required for any committed result;
+# the replication runs off their shipped cache.
+#   pip install torch cvxpylayers
+# torch
+# cvxpylayers
